@@ -1,6 +1,6 @@
 while true
-    set string (amixer get Master | grep '..%' -o | head -n 1) "|"
-    set string $string (date "+%a %m/%d")
+    set string (acpi | grep '..%' -o | head -n 1) "|"
+    set string $string (date "+%a %m/%d %I:%M")
     xsetroot -name (echo $string)
     sleep 1m
 end
