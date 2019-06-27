@@ -34,7 +34,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.57; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -60,7 +60,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-show", "drun" };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "termite", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 
 static const char *volumedowncmd[]  = { "amixer", "-q", "set", "Master", "2%-", "unmute" };
