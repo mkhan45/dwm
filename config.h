@@ -63,8 +63,15 @@ static const char *dmenucmd[] = { "rofi", "-show", "drun" };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 
+static const char *volumedowncmd[]  = { "amixer", "-q", "set", "Master", "2%-", "unmute" };
+static const char *volumeupcmd[]  = { "amixer", "-q", "set", "Master", "2%+", "unmute" };
+static const char *volumetogglecmd[]  = { "amixer", "-q", "set", "Master", "toggle"};
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+        {0,                             0x1008ff13,spawn,          {.v = volumeupcmd}},
+        {0,                             0x1008ff11,spawn,          {.v = volumedowncmd}},
+        {0,                             0x1008ff12,spawn,          {.v = volumetogglecmd}},
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_f,      spawn,          {.v = browsercmd } },
@@ -102,7 +109,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} } 
 };
 
 /* button definitions */
