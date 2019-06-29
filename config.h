@@ -1,11 +1,10 @@
-/* See LICENSE file for copyright and license details. */
-#include <X11/XF86keysym.h>
+/* See LICENSE file for copyright and license details. */ #include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappx     = 5;
-static const unsigned int vertpadbar= 3;
+static const unsigned int gappx     = 3;
+static const unsigned int vertpadbar= 7;
 static const unsigned int horizpadbar = 0;
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -66,9 +65,9 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      combotag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -99,10 +98,12 @@ static Key keys[] = {
 	{ MODKEY,                       56,        togglebar,      {0} },
 	{ MODKEY,                       44,        focusstack,     {.i = +1 } },
 	{ MODKEY,                       45,        focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             46,        incnmaster,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             40,        incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             40,        incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             31,        incnmaster,     {.i = -1 } },
 	{ MODKEY,                       43,        setmfact,       {.f = -0.05} },
 	{ MODKEY,                       46,        setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             46,        setcfact,       {.f = +0.25} },
+	{ MODKEY|ShiftMask,             43,        setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             36, zoom,           {0} },
 	{ MODKEY,                       23,    view,           {0} },
 	{ MODKEY|ShiftMask,             24,      killclient,     {0} },
@@ -113,8 +114,8 @@ static Key keys[] = {
 	{ MODKEY,                       65,  setlayout,      {0} }, //space
 	{ MODKEY|ShiftMask,             65,  togglefloating, {0} }, //space
 	{ MODKEY,                       27,      rotatestack,    {1} }, //r
-	{ MODKEY,                       19,      view,           {.ui = ~0 } }, //0
-	{ MODKEY|ShiftMask,             19,      tag,            {.ui = ~0 } }, //0
+	{ MODKEY,                       19,      comboview,           {.ui = ~0 } }, //0
+	{ MODKEY|ShiftMask,             19,      combotag,            {.ui = ~0 } }, //0
 	{ MODKEY,                       59,  focusmon,       {.i = -1 } }, //comma
 	{ MODKEY,                       60, focusmon,       {.i = +1 } }, //period
 	{ MODKEY|ShiftMask,             59,  tagmon,         {.i = -1 } }, //comma 
