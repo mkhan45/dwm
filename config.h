@@ -72,7 +72,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/fish", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/dash", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -80,9 +80,9 @@ static const char *dmenucmd[] = { "rofi", "-show", "drun" };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 
-static const char *volumedowncmd[]  = { "/home/fish/dwm/scripts/volumedown.fish" };
-static const char *volumeupcmd[]  = { "/home/fish/dwm/scripts/volumeup.fish", "&&" };
-static const char *volumetogglecmd[]  = { "/home/fish/dwm/scripts/volumetoggle.fish" };
+static const char *volumedowncmd[]  = { "/home/fish/dwm/scripts/volumedown.dash" };
+static const char *volumeupcmd[]  = { "/home/fish/dwm/scripts/volumeup.dash", "&&" };
+static const char *volumetogglecmd[]  = { "/home/fish/dwm/scripts/volumetoggle.dash" };
 static const char *lockcmd[]  = { "betterlockscreen", "-l", "dimblur"};
 
 
