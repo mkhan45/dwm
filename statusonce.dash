@@ -1,5 +1,5 @@
 #!/bin/dash
-string="⚡`acpi | grep '..%' -o | head -n 1` |"
+string="⚡`acpi | rg '(..+%)|(..:..:..)' -o |tr '\n' ' '`|"
 string="${string} 🔈`pamixer --get-volume-human` |"
 string="${string} `date '+%a %m/%d %I:%M'`"
 xsetroot -name "${string}"
