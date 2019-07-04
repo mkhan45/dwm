@@ -6,7 +6,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappx     = 3;
 static const unsigned int vertpadbar= 7;
 static const unsigned int horizpadbar = 0;
-static const int showbar            = 1;        /* 0 means no bar */
+static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "DejaVu Sans Mono:size=12" };
 static const char dmenufont[]       = "monospace:size=10";
@@ -92,6 +92,7 @@ static Key keys[] = {
         { ControlMask|ShiftMask,        12,        spawn,          {.v = volumeupcmd}},
         { ControlMask|ShiftMask,        11,        spawn,          {.v = volumedowncmd}},
         { ControlMask|ShiftMask,        10,        spawn,          {.v = volumetogglecmd}},
+	{ 0,                            133,       holdbar,        { 0 } }, //super
 	{ MODKEY,                       40,        spawn,          {.v = dmenucmd } }, //d
 	{ MODKEY,                       36,        spawn,          {.v = termcmd } }, //enter
 	{ MODKEY,                       41,        spawn,          {.v = browsercmd } }, //f

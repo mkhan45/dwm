@@ -1,11 +1,10 @@
---- config.def.h	2019-05-12 17:29:44.703284415 +0200
-+++ config.def.h	2019-05-12 17:40:35.226605379 +0200
-@@ -39,6 +39,8 @@ static const int resizehints = 1;    /*
+--- config.def.h
++++ config.def.h
+@@ -94,7 +94,6 @@ static Key keys[] = {
+ 	TAGKEYS(                        XK_8,                      7)
+ 	TAGKEYS(                        XK_9,                      8)
+ 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+-        { 0,                            XK_Super_L,holdbar,         {0} },
+ };
  
- static const Layout layouts[] = {
- 	/* symbol     arrange function */
-+	{ "|M|",      centeredmaster },
-+	{ ">M>",      centeredfloatingmaster },
- 	{ "[]=",      tile },    /* first entry is default */
- 	{ "><>",      NULL },    /* no layout function means floating behavior */
- 	{ "[M]",      monocle },
+ /* button definitions */
