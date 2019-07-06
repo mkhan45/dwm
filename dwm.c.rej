@@ -1,53 +1,59 @@
 --- dwm.c
 +++ dwm.c
-@@ -247,6 +249,7 @@ static int (*xerrorxlib)(Display *, XErrorEvent *);
- static unsigned int numlockmask = 0;
- static void (*handler[LASTEvent]) (XEvent *) = {
- 	[ButtonPress] = buttonpress,
-+        [ButtonRelease] = keyrelease,
- 	[ClientMessage] = clientmessage,
- 	[ConfigureRequest] = configurerequest,
- 	[ConfigureNotify] = configurenotify,
-@@ -254,6 +257,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
- 	[EnterNotify] = enternotify,
- 	[Expose] = expose,
- 	[FocusIn] = focusin,
-+        [KeyRelease] = keyrelease,
- 	[KeyPress] = keypress,
- 	[MappingNotify] = mappingnotify,
- 	[MapRequest] = maprequest,
-@@ -277,6 +281,24 @@ static Window root, wmcheckwin;
- struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
+@@ -709,8 +709,6 @@ drawbar(Monitor *m)
+ 	}
  
- /* function implementations */
-+
-+void
-+keyrelease(XEvent *e) {
-+        if (e->xkey.keycode == XKeysymToKeycode(dpy, XK_Super_L)) {
-+                selmon->showbar = 0;
-+                updatebarpos(selmon);
-+                XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
-+                arrange(selmon);
-+        }
-+}
-+
-+void
-+holdbar(const Arg *arg)
-+{
-+        selmon->showbar = 1;
-+        updatebarpos(selmon);
-+        XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
-+}
- void
- applyrules(Client *c)
- {
-@@ -1828,9 +1850,7 @@ updatebarpos(Monitor *m)
- 	m->wy = m->my;
- 	m->wh = m->mh;
- 	if (m->showbar) {
--		m->wh -= bh;
- 		m->by = m->topbar ? m->wy : m->wy + m->wh;
--		m->wy = m->topbar ? m->wy + bh : m->wy;
- 	} else
- 		m->by = -bh;
+ 	for (c = m->clients; c; c = c->next) {
+-		if (ISVISIBLE(c))
+-			n++;
+ 		occ |= c->tags;
+ 		if (c->isurgent)
+ 			urg |= c->tags;
+@@ -731,39 +729,15 @@ drawbar(Monitor *m)
+ 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+ 
+ 	if ((w = m->ww - sw - x) > bh) {
+-		if (n > 0) {
+-			tw = TEXTW(m->sel->name) + lrpad;
+-			mw = (tw >= w || n == 1) ? 0 : (w - tw) / (n - 1);
+-
+-			i = 0;
+-			for (c = m->clients; c; c = c->next) {
+-				if (!ISVISIBLE(c) || c == m->sel)
+-					continue;
+-				tw = TEXTW(c->name);
+-				if(tw < mw)
+-					ew += (mw - tw);
+-				else
+-					i++;
+-			}
+-			if (i > 0)
+-				mw += ew / i;
+-
+-			for (c = m->clients; c; c = c->next) {
+-				if (!ISVISIBLE(c))
+-					continue;
+-				tw = MIN(m->sel == c ? w : mw, TEXTW(c->name));
+-
+-				drw_setscheme(drw, scheme[m->sel == c ? SchemeSel : SchemeNorm]);
+-				if (tw > 0) /* trap special handling of 0 in drw_text */
+-					drw_text(drw, x, 0, tw, bh, lrpad / 2, c->name, 0);
+-				if (c->isfloating)
+-					drw_rect(drw, x + boxs, boxs, boxw, boxw, c->isfixed, 0);
+-				x += tw;
+-				w -= tw;
+-			}
++		if (m->sel) {
++			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
++			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
++			if (m->sel->isfloating)
++				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
++		} else {
++			drw_setscheme(drw, scheme[SchemeNorm]);
++			drw_rect(drw, x, 0, w, bh, 1, 1);
+ 		}
+-		drw_setscheme(drw, scheme[SchemeNorm]);
+-		drw_rect(drw, x, 0, w, bh, 1, 1);
+ 	}
+ 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
  }

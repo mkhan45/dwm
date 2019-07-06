@@ -182,6 +182,7 @@ static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
+static void keyrelease(XEvent *e);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
@@ -221,6 +222,7 @@ static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
+static void holdbar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
@@ -308,6 +310,20 @@ static int combo = 0;
 void
 keyrelease(XEvent *e) {
 	combo = 0;
+        if (e->xkey.keycode == XKeysymToKeycode(dpy, XK_Super_L)) {
+                selmon->showbar = 0;
+                updatebarpos(selmon);
+                XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
+                arrange(selmon);
+        }
+}
+
+void
+holdbar(const Arg *args)
+{
+        selmon->showbar = 1;
+        updatebarpos(selmon);
+        XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
 }
 
 void
@@ -507,6 +523,8 @@ buttonpress(XEvent *e)
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
 		for (c = m->clients; c; c = c->next)
+                    if (ISVISIBLE(c))
+                        n++;
 			occ |= c->tags == 255 ? 0 : c->tags;
 		do {
 			/* do not reserve space for vacant tags */
@@ -774,10 +792,10 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	int x, w, sw = 0;
+	int x, w, sw = 0, tw, mw, ew = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
-	unsigned int i, occ = 0, urg = 0;
+	unsigned int i, occ = 0, urg = 0, n = 0;
 	Client *c;
 
 	/* draw status first so it can be overdrawn by tags later */
@@ -2018,9 +2036,7 @@ updatebarpos(Monitor *m)
     m->wy = m->my;
     m->wh = m->mh;
     if (m->showbar) {
-        m->wh -= bh;
         m->by = m->topbar ? m->wy : m->wy + m->wh;
-        m->wy = m->topbar ? m->wy + bh : m->wy;
     } else
         m->by = -bh;
 }
