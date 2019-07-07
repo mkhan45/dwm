@@ -80,10 +80,10 @@ static const char *dmenucmd[] = { "rofi", "-show", "drun" };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 
-static const char *volumedowncmd[]  = { "/home/fish/dwm/scripts/volumedown.dash" };
-static const char *volumeupcmd[]  = { "/home/fish/dwm/scripts/volumeup.dash", "&&" };
-static const char *volumetogglecmd[]  = { "/home/fish/dwm/scripts/volumetoggle.dash" };
-static const char *lockcmd[]  = { "betterlockscreen", "-l", "dimblur"};
+static const char *volumedowncmd[]  = { "/home/fish/dwm/scripts/volumedown.dash", NULL };
+static const char *volumeupcmd[]  = { "/home/fish/dwm/scripts/volumeup.dash", NULL };
+static const char *volumetogglecmd[]  = { "/home/fish/dwm/scripts/volumetoggle.dash", NULL };
+static const char *lockcmd[]  = { "/home/fish/dwm/scripts/lock.dash", NULL };
 
 
 /* volume buttons: 4294967197 */
