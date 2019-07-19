@@ -1,0 +1,19 @@
+#!/bin/dash
+string=`echo "Youtube\nFacebook\nReddit\nGoogle Drive\nGithub\nBlackboard" | rofi -dmenu -lines 6 -p Search`
+
+echo $string | wc -m
+
+if [ ! `echo $string | wc -m` -eq 1 ]
+then
+    string=`echo $string | tr '[:upper:]' '[:lower:]'`
+    string="https://${string}.com"
+
+    echo $string
+
+    if [ `echo $string | rg -e "(youtube)|(facebook)|(reddit)|(google)|(drive)|(github)|(blackboard)" | wc -m` -eq 0 ]
+    then
+        echo $string | xargs -i[] firefox --new-window https://duckduckgo.com/?q=[]
+    else
+        echo $string | xargs firefox --new-window
+    fi
+fi

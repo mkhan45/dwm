@@ -4,11 +4,11 @@
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappx     = 3;
-static const unsigned int vertpadbar= 8;
+static const unsigned int vertpadbar= 9;
 static const unsigned int horizpadbar = 0;
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "DejaVu Sans Mono:size=14" };
+static const char *fonts[]          = { "DejaVu Sans Mono:size=15" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_white[]       = "#f8f8f8";
 static const char col_bright[]      = "#ffffff";
@@ -23,6 +23,8 @@ static const char col_lightgrey[]   = "#71718f";
 static const char col_red[]         = "#ce3521";
 static const unsigned int baralpha  = 0xd7;
 static const unsigned int borderalpha = OPAQUE;
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_greyblue, col_lightgrey },
@@ -77,21 +79,34 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-show", "drun" };
-static const char *termcmd[]  = { "st", NULL };
-static const char *browsercmd[]  = { "firefox", NULL };
+static const char *termcmd[]  = { "st" };
+static const char *browsercmd[]  = { "/home/fish/dwm/scripts/browser_launch.dash", NULL };
+static const char *emailcmd[]  = { "st", "-e", "neomutt" };
 
 static const char *volumedowncmd[]  = { "/home/fish/dwm/scripts/volumedown.dash", NULL };
 static const char *volumeupcmd[]  = { "/home/fish/dwm/scripts/volumeup.dash", NULL };
 static const char *volumetogglecmd[]  = { "/home/fish/dwm/scripts/volumetoggle.dash", NULL };
 static const char *lockcmd[]  = { "/home/fish/dwm/scripts/lock.dash", NULL };
+static const char *brightnessdowncmd[]  = { "/home/fish/dwm/scripts/brightnessdown.dash", NULL };
+static const char *brightnessupcmd[]  = { "/home/fish/dwm/scripts/brightnessup.dash", NULL };
 
 
 /* volume buttons: 4294967197 */
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-        { ControlMask|ShiftMask,        12,        spawn,          {.v = volumeupcmd}},
-        { ControlMask|ShiftMask,        11,        spawn,          {.v = volumedowncmd}},
-        { ControlMask|ShiftMask,        10,        spawn,          {.v = volumetogglecmd}},
+        { 0,                            123,        spawn,          {.v = volumeupcmd}},
+        { 0,                            122,        spawn,          {.v = volumedowncmd}},
+        { 0,                            121,        spawn,          {.v = volumetogglecmd}},
+        { 0,                            232,        spawn,          {.v = brightnessdowncmd}},
+        { 0,                            233,        spawn,          {.v = brightnessupcmd}},
+        { MODKEY,                       123,        spawn,          {.v = volumeupcmd}},
+        { MODKEY,                       123,        spawn,          {.v = volumeupcmd}},
+        { MODKEY,                       122,        spawn,          {.v = volumedowncmd}},
+        { MODKEY,                       121,        spawn,          {.v = volumetogglecmd}},
+        { MODKEY,                       232,        spawn,          {.v = brightnessdowncmd}},
+        { MODKEY,                       233,        spawn,          {.v = brightnessupcmd}},
+        { MODKEY,                       123,        spawn,          {.v = volumeupcmd}},
+        { MODKEY,                       26,         spawn,          {.v = emailcmd}},
 	{ 0,                            133,       holdbar,        { 0 } }, //super
 	{ MODKEY,                       40,        spawn,          {.v = dmenucmd } }, //d
 	{ MODKEY,                       36,        spawn,          {.v = termcmd } }, //enter
@@ -132,6 +147,7 @@ static Key keys[] = {
 	TAGKEYS(                        17,                      7)
 	TAGKEYS(                        18,                      8)
 	{ MODKEY|ShiftMask,             26,      quit,           {0} }, //e
+	{ MODKEY|ShiftMask,             52,      togglescratch,  {.v = scratchpadcmd} }, //z
 	{ MODKEY|ControlMask|ShiftMask, 24,      quit,           {1} } 
 };
 
