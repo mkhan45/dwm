@@ -78,7 +78,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "drun" };
+static const char *dmenucmd[] = { "rofi", "-show", "drun", "-p", "Launch" };
 static const char *termcmd[]  = { "st" };
 static const char *browsercmd[]  = { "/home/fish/dwm/scripts/browser_launch.dash", NULL };
 static const char *emailcmd[]  = { "st", "-e", "neomutt" };
