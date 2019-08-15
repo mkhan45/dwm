@@ -7,4 +7,4 @@ Github
 Blackboard
 Weather
 Messenger
-Email
+Inbox

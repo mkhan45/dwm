@@ -16,7 +16,7 @@ then
         elif [ "$string" = "Python Like You Mean It" ]
         then
             string="http://pythonlikeyoumeanit.com/"
-        elif [ "$string" = "Email" ]
+        elif [ "$string" = "Inbox" ]
         then
             string="http://inbox.google.com"
         elif [ "$string" = "Weather" ]

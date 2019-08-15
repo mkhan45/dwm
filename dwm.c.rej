@@ -1,39 +1,33 @@
---- dwm.c	2019-06-06 21:23:27.023328450 +0200
-+++ dwm.c	2019-06-20 15:07:01.089767947 +0200
-@@ -1672,6 +1683,7 @@ spawn(const Arg *arg)
- {
- 	if (arg->v == dmenucmd)
- 		dmenumon[0] = '0' + selmon->num;
-+	selmon->tagset[selmon->seltags] &= ~scratchtag;
- 	if (fork() == 0) {
- 		if (dpy)
- 			close(ConnectionNumber(dpy));
-@@ -1759,6 +1771,28 @@ togglefloating(const Arg *arg)
- }
- 
- void
-+togglescratch(const Arg *arg)
-+{
-+	Client *c;
-+	unsigned int found = 0;
-+
-+	for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next);
-+	if (found) {
-+		unsigned int newtagset = selmon->tagset[selmon->seltags] ^ scratchtag;
-+		if (newtagset) {
-+			selmon->tagset[selmon->seltags] = newtagset;
-+			focus(NULL);
-+			arrange(selmon);
+--- dwm.c
++++ dwm.c
+@@ -93,7 +93,7 @@ struct Client {
+ 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
+ 	int bw, oldbw;
+ 	unsigned int tags;
+-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
++	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, needresize;
+ 	Client *next;
+ 	Client *snext;
+ 	Monitor *mon;
+@@ -625,6 +625,8 @@ configurerequest(XEvent *e)
+ 				configure(c);
+ 			if (ISVISIBLE(c))
+ 				XMoveResizeWindow(dpy, c->win, c->x, c->y, c->w, c->h);
++			else
++				c->needresize = 1;
+ 		} else
+ 			configure(c);
+ 	} else {
+@@ -1610,6 +1612,12 @@ showhide(Client *c)
+ 	if (ISVISIBLE(c)) {
+ 		/* show clients top down */
+ 		XMoveWindow(dpy, c->win, c->x, c->y);
++		if (c->needresize) {
++			c->needresize = 0;
++			XMoveResizeWindow(dpy, c->win, c->x, c->y, c->w, c->h);
++		} else {
++			XMoveWindow(dpy, c->win, c->x, c->y);
 +		}
-+		if (ISVISIBLE(c)) {
-+			focus(c);
-+			restack(selmon);
-+		}
-+	} else
-+		spawn(arg);
-+}
-+
-+void
- toggletag(const Arg *arg)
- {
- 	unsigned int newtags;
+ 		if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) && !c->isfullscreen)
+ 			resize(c, c->x, c->y, c->w, c->h, 0);
+ 		showhide(c->snext);
