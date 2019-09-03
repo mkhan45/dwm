@@ -8,3 +8,4 @@ Blackboard
 Weather
 Messenger
 Inbox
+Common App

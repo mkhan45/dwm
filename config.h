@@ -80,13 +80,16 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-show", "drun", "-p", "Launch" };
 static const char *termcmd[]  = { "st" };
-static const char *browsercmd[]  = { "/home/fish/dwm/scripts/browser_launch.dash", NULL };
+static const char *browsercmd[]  = { "/home/fish/dwm/scripts/browser_launch.dash", "false" };
+static const char *browsercmdwindow[]  = { "/home/fish/dwm/scripts/browser_launch.dash", "true" };
+static const char *actionscmd[]  = { "/home/fish/dwm/scripts/actions.dash", NULL };
 static const char *emailcmd[]  = { "st", "-e", "neomutt" };
 
 static const char *volumedowncmd[]  = { "/home/fish/dwm/scripts/volumedown.dash", NULL };
 static const char *volumeupcmd[]  = { "/home/fish/dwm/scripts/volumeup.dash", NULL };
 static const char *volumetogglecmd[]  = { "/home/fish/dwm/scripts/volumetoggle.dash", NULL };
 static const char *lockcmd[]  = { "/home/fish/dwm/scripts/lock.dash", NULL };
+static const char *screenoffcmd[]  = { "/home/fish/dwm/scripts/screenoff.dash" };
 static const char *brightnessdowncmd[]  = { "/home/fish/dwm/scripts/brightnessdown.dash", NULL };
 static const char *brightnessupcmd[]  = { "/home/fish/dwm/scripts/brightnessup.dash", NULL };
 
@@ -111,7 +114,10 @@ static Key keys[] = {
 	{ MODKEY,                       40,        spawn,          {.v = dmenucmd } }, //d
 	{ MODKEY,                       36,        spawn,          {.v = termcmd } }, //enter
 	{ MODKEY,                       41,        spawn,          {.v = browsercmd } }, //f
+	{ MODKEY|ShiftMask,             41,      spawn,          {.v = browsercmdwindow } },
+	{ MODKEY,                       38,      spawn,            {.v = actionscmd } },
 	{ MODKEY|ShiftMask,             38,        spawn,          {.v = lockcmd} }, //a
+	{ MODKEY|ShiftMask,             39,        spawn,          {.v = screenoffcmd} }, //s
 	{ MODKEY,                       56,        togglebar,      {0} },
 	{ MODKEY,                       44,        focusstack,     {.i = +1 } },
 	{ MODKEY,                       45,        focusstack,     {.i = -1 } },

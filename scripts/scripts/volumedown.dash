@@ -1,0 +1,3 @@
+#!/bin/dash
+pamixer -d 3 &
+dash /home/fish/dwm/statusonce.dash
