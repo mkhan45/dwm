@@ -1,3 +1,2 @@
 #!/bin/dash
-echo "$a"
 st -e fish -i -C "eval $@"

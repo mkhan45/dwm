@@ -18,4 +18,4 @@ then
     exit
 fi
 
-echo "$name | $action" >> "$1"
+echo "$name || $action" >> "$1"
