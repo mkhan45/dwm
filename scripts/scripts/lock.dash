@@ -1,0 +1,3 @@
+#!/bin/dash
+betterlockscreen -l dimblur & sleep 3
+xset dpms force off

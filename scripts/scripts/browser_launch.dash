@@ -1,0 +1,28 @@
+#!/bin/dash
+string=`echo "Youtube\nPython Like You Mean It\nFacebook\nReddit\nGoogle Drive\nGithub\nBlackboard\nWeather
+Messenger" | rofi -dmenu -p Search -i`
+
+echo $string | wc -m
+
+if [ ! `echo $string | wc -m` -eq 1 ]
+then
+    if [ `echo $string | rg -e "(Youtube)|(Facebook)|(Reddit)|(Google Drive)|(Github)|(Blackboard)|(Python Like You Mean It)|(Weather)|(Messenger)" | wc -m` -eq 0 ]
+    then
+        echo $string | xargs -i[] firefox --new-window https://duckduckgo.com/?q=[]
+    else
+        if [ ! `echo $string | rg -e lackboard | wc -m` -eq 0 ]
+        then
+            string="https://fcps.blackboard.com"
+        elif [ ! `echo $string | rg -e 'Python Like' | wc -m` -eq 0 ]
+        then
+            string="http://pythonlikeyoumeanit.com/"
+        elif [ ! `echo $string | rg -e 'Weather' | wc -m` -eq 0 ]
+        then
+            string="http://darksky.net"
+        else
+            string=`echo $string | tr '[:upper:]' '[:lower:]'`
+            string="https://${string}.com"
+        fi
+        echo $string | xargs firefox --new-window
+    fi
+fi

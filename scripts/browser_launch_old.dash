@@ -1,0 +1,35 @@
+#!/bin/dash
+string=`cat ~/dwm/scripts/shortcuts.txt | rofi -dmenu -p Search -i`
+searches=`sed ~/dwm/scripts/shortcuts.txt -e '1n; i|' | tr -d '\n'` # add pipes and delete newlines
+
+if [ ! `echo "$string" | wc -m` -eq 1 ]
+then
+    if [ `echo "$string" | rg -e "(\.com)$|(http)^" --multiline -m 1 -c` -eq 1 ]
+    then
+        echo $string | xargs firefox --new-window
+    elif [ `echo $string | rg -e "$searches" -m 1 -c` -eq 1 ]
+    then
+        if [ "$string" = "Blackboard" ]
+        then
+            string="https://fcps.blackboard.com"
+        elif [ "$string" = "Python Like You Mean It" ]
+        then
+            string="http://pythonlikeyoumeanit.com/"
+        elif [ "$string" = "Common App" ]
+        then
+            string="http://commonapp.org"
+        elif [ "$string" = "Inbox" ]
+        then
+            string="http://inbox.google.com"
+        elif [ "$string" = "Weather" ]
+        then
+            string="http://darksky.net"
+        else
+            string=`echo $string | tr '[:upper:]' '[:lower:]'`
+            string="https://${string}.com"
+        fi
+        echo "$string" | xargs firefox --new-window
+    else
+        echo "$string" | xargs -i[] firefox --new-window https://duckduckgo.com/?q=[]
+    fi
+fi

@@ -1,0 +1,7 @@
+#!/bin/dash
+pkill status.dash
+while true
+do
+    dash /home/fish/dwm/statusonce.dash
+    sleep 1m
+done
