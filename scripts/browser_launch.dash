@@ -22,7 +22,7 @@ then
     if echo "$string" | rg -e "^/r/[a-zA-z]+$" --multiline -q
     then
          eval "$command" 'https://reddit.com'"\"$string\""
-    elif echo "$string" | rg -e "^([a-zA-z]+\.)+[a-z]{2,4}(/[a-zA-z]*)*$" --multiline -q
+    elif echo "$string" | rg -e "^([a-zA-z\-]+\.)+[a-z]{2,4}(/[a-zA-z]*)*$" --multiline -q
     then
          eval "$command" "\"$string\""
     else
