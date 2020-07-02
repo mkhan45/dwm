@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -6,6 +7,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappx     = 5;
 static const unsigned int vertpadbar = 10;
 static const unsigned int horizpadbar = 1;
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "DejaVu Sans Mono Nerd Font:size=16.5" };
@@ -36,8 +38,9 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	/* class      instance    title       tags mask     isfloating   isterminal noswallow monitor */
+	{ "Gimp",     NULL,       NULL,       0,            1,           0,         0,         -1 },
+	{ "st",       NULL,       NULL,       0,            0,           1,         0,         -1 },
 	/* { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 }, */
 };
 
@@ -84,6 +87,10 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
         {0,                             0x1008ff13,spawn,          {.v = volumeupcmd}},
         {0,                             0x1008ff11,spawn,          {.v = volumedowncmd}},
+        {0,                             0x1008ff12,spawn,          {.v = volumetogglecmd}},
+        // volume scroller is going bad so just use skip/prev buttons
+        {0,                             XF86XK_AudioNext,  spawn,          {.v = volumeupcmd}},
+        {0,                             XF86XK_AudioPrev,  spawn,          {.v = volumedowncmd}},
         {0,                             0x1008ff12,spawn,          {.v = volumetogglecmd}},
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = sccmd } },
