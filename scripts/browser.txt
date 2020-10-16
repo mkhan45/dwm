@@ -10,3 +10,5 @@ Messenger               |       https://messenger.com
 Inbox                   |       https://inbox.google.com 
 Common App              |       https://commonapp.org
 Classroom               |       classroom.google.com
+Hacker News 	        |       news.ycombinator.com
+Proton Mail             |       protonmail.com
