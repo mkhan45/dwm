@@ -1,5 +1,10 @@
 #!/bin/dash
-string="VPN: `protonvpn status | head -n 1 | cut -d' ' -f8`"
-string="${string} | Volume: `amixer get Master | rg '[0-9]+%' -o | head -n 1)` |"
+if nmcli con | rg -q proton; then
+    string="VPN Connected | "
+else
+    string=""
+fi
+
+string="${string} Volume: `amixer get Master | rg '[0-9]+%' -o | head -n 1)` |"
 string="${string} `date '+%a %m/%d | %I:%M %p'`"
 xsetroot -name "${string}"
