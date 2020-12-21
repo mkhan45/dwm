@@ -1,4 +1,4 @@
-/* See LICENSE file for copyright and license details. */
+
 #include <X11/XF86keysym.h>
 
 /* appearance */
@@ -41,6 +41,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   isterminal noswallow monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           0,         0,         -1 },
 	{ "st",       NULL,       NULL,       0,            0,           1,         0,         -1 },
+	{ "steam",    NULL, "Steam Keyboard", 0,            1,           1,         1,         -1 },
 	/* { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 }, */
 };
 
@@ -121,15 +122,17 @@ static Key keys[] = {
 	{ MODKEY,                       XK_o, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_p,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_o, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_0,    view,           {.ui = ~0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_F1,                      5)
-	TAGKEYS(                        XK_F2,                      6)
-	TAGKEYS(                        XK_F3,                      7)
-	TAGKEYS(                        XK_F4,                      8)
+	TAGKEYS(                        XK_6,                      5)
+	TAGKEYS(                        XK_7,                      6)
+	TAGKEYS(                        XK_8,                      7)
+	TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} } 
 };
