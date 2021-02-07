@@ -20,3 +20,5 @@ School Stuff || st -e lf ~/"School_Stuff"
 Tetris || ~/dwm/scripts/fishcmd.dash 'ssh netris.rocketnine.space'
 Volume Control || ~/dwm/scripts/fishcmd.dash pulsemixer
 Proton VPN || ~/dwm/scripts/fishcmd.dash 'sudo protonvpn connect --fastest'
+Boilerkey || python ~/projects/local-boilerkey/boilerkey.py | xclip -sel clip
+Emojify || dash ~/dwm/scripts/emojify.sh
